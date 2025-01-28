@@ -1,10 +1,21 @@
 let currentChecks = {};
 
 document.addEventListener('DOMContentLoaded', () => {
+    const headerUpdate = document.getElementById('header-updater');
+    headerUpdate.addEventListener('click', reloadPage);
+
     loadChecks();
-    document.getElementById('tripType').addEventListener('change', loadChecklist);
+    const tripTypeSelect = document.getElementById('tripType');
+
+    tripTypeSelect.value = localStorage.getItem('tripType') || 'flight';
+
+    tripTypeSelect.addEventListener('change', loadChecklist);
     loadChecklist();
 });
+
+function reloadPage() {
+    location.reload();
+}
 
 async function loadChecklist() {
     const response = await fetch('list.json');
@@ -12,6 +23,9 @@ async function loadChecklist() {
     const tripType = document.getElementById('tripType').value;
     const checklist = document.getElementById('checklist');
     checklist.innerHTML = '';
+
+    // Сохраняем в localStorage.
+    localStorage.setItem('tripType', tripType);
 
     const sections = lists[tripType];
     for (const [sectionName, items] of Object.entries(sections)) {

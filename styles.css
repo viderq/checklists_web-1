@@ -100,7 +100,7 @@ select {
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.checklist-item:hover {
+.checklist-item:active {
     transform: translateX(5px);
     box-shadow: 2px 2px 8px var(--shadow);
 }
@@ -131,7 +131,7 @@ select {
     transition: opacity 0.3s, transform 0.2s;
 }
 
-.reset-btn:hover {
+.reset-btn:active {
     opacity: 0.9;
     transform: scale(0.98);
 }
@@ -199,4 +199,8 @@ select {
 
 .section.collapsed .collapse-icon {
     transform: rotate(180deg);
+}
+
+#header-updater {
+    cursor: pointer;
 }
