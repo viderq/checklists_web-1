@@ -1,7 +1,7 @@
 {
-  "name": "GAMC Weather",
-  "short_name": "GAMC Weather",
-  "start_url": "/gamc_app/index.html",
+  "name": "CheckLists",
+  "short_name": "CheckLists",
+  "start_url": "/checklists_web/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#007BFF",
