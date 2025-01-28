@@ -204,3 +204,38 @@ select {
 #header-updater {
     cursor: pointer;
 }
+
+.all-checked-banner {
+    display: none;
+    background: #4CAF50;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    animation: fadeIn 0.5s ease;
+}
+
+.all-checked-banner i {
+    margin-right: 10px;
+}
+
+/* Темная тема для плашки */
+@media (prefers-color-scheme: dark) {
+    .all-checked-banner {
+        background: #388E3C; /* Более темный оттенок зеленого */
+        color: #e0e0e0; /* Светлый текст для контраста */
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

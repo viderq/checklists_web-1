@@ -28,6 +28,8 @@ async function loadChecklist() {
     localStorage.setItem('tripType', tripType);
 
     const sections = lists[tripType];
+    let allSectionsChecked = true;
+
     for (const [sectionName, items] of Object.entries(sections)) {
         if (items.length === 0) continue;
 
@@ -69,6 +71,8 @@ async function loadChecklist() {
 
         if (allChecked) {
             section.classList.add('collapsed', 'fully-checked');
+        } else {
+            allSectionsChecked = false;
         }
 
         title.addEventListener('click', () => {
@@ -79,6 +83,14 @@ async function loadChecklist() {
         section.appendChild(title);
         section.appendChild(content);
         checklist.appendChild(section);
+    }
+
+    // Показываем или скрываем плашку "Всё проверено"
+    const allCheckedBanner = document.getElementById('all-checked-banner');
+    if (allSectionsChecked) {
+        allCheckedBanner.style.display = 'block';
+    } else {
+        allCheckedBanner.style.display = 'none';
     }
 }
 
@@ -98,6 +110,19 @@ function toggleCheck(itemId, element) {
         section.classList.add('collapsed');
     } else {
         section.classList.remove('collapsed');
+    }
+
+    // Проверяем статус всех разделов
+    const sections = document.querySelectorAll('.section');
+    const allSectionsChecked = Array.from(sections).every(section =>
+        section.classList.contains('fully-checked')
+    );
+
+    const allCheckedBanner = document.getElementById('all-checked-banner');
+    if (allSectionsChecked) {
+        allCheckedBanner.style.display = 'block';
+    } else {
+        allCheckedBanner.style.display = 'none';
     }
 }
 
