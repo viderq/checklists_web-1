@@ -1,0 +1,202 @@
+:root {
+    --primary: #4a90e2;
+    --background: #ffffff;
+    --text: #333333;
+    --card-bg: #f5f5f5;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background: #1a1a1a;
+        --text: #ffffff;
+        --card-bg: #2d2d2d;
+        --shadow: rgba(255, 255, 255, 0.1);
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: background 0.3s, color 0.3s;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.selector {
+    margin-bottom: 25px;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--primary);
+    border-radius: 8px;
+    background: var(--card-bg);
+    color: var(--text);
+    font-size: 16px;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+}
+
+.section {
+    background: var(--card-bg);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    padding: 15px;
+    box-shadow: 0 4px 6px var(--shadow);
+    animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-title {
+    font-size: 1.2em;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checklist-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 8px;
+    background: var(--background);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.checklist-item:hover {
+    transform: translateX(5px);
+    box-shadow: 2px 2px 8px var(--shadow);
+}
+
+.checklist-item.checked {
+    opacity: 0.6;
+    text-decoration: line-through;
+}
+
+.checkbox {
+    margin-right: 15px;
+    color: var(--primary);
+}
+
+.reset-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    transition: opacity 0.3s, transform 0.2s;
+}
+
+.reset-btn:hover {
+    opacity: 0.9;
+    transform: scale(0.98);
+}
+
+.reset-btn:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+}
+
+.section {
+    background: var(--card-bg);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px var(--shadow);
+    transition: all 0.3s ease;
+}
+
+.section-title {
+    padding: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+.section-title .status-icon {
+    margin-left: auto;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.section-content {
+    overflow: hidden;
+    max-height: 1000px;
+    transition: max-height 0.3s ease-out;
+}
+
+.section.collapsed .section-content {
+    max-height: 0;
+}
+
+.checkmark {
+    color: #4CAF50;
+    display: none;
+}
+
+.section.fully-checked .checkmark {
+    display: inline-block;
+}
+
+.collapse-icon {
+    transition: transform 0.3s;
+}
+
+.section.collapsed .collapse-icon {
+    transform: rotate(180deg);
+}

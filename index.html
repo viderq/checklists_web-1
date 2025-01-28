@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Checklist</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Чек-лист командировки</h1>
+
+        <div class="selector">
+            <select id="tripType">
+                <option value="flight">Рейс рабочим разворотом</option>
+                <option value="workFirst">Командировка сначала рабочим</option>
+                <option value="passengerFirst">Командировка сначала пассажиром</option>
+            </select>
+        </div>
+
+        <div id="checklist"></div>
+
+        <button class="reset-btn" onclick="resetChecks()">
+            <i class="fas fa-undo"></i> Сбросить
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
