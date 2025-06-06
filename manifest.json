@@ -1,7 +1,7 @@
 {
   "name": "CheckLists",
   "short_name": "CheckLists",
-  "start_url": "/checklists_web/index.html",
+  "start_url": "/checklists_web-1/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#007BFF",
