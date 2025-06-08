@@ -116,7 +116,11 @@ async function loadChecklist() {
         });
 
         content.appendChild(itemsList);
-        content.style.maxHeight = content.scrollHeight + "px";
+        // Устанавливаем временно max-height: 0, затем плавно разворачиваем
+        content.style.maxHeight = '0px';
+        requestAnimationFrame(() => {
+            content.style.maxHeight = content.scrollHeight + "px";
+        });
         section.appendChild(title);
         section.appendChild(content);
         checklist.appendChild(section);
