@@ -176,7 +176,6 @@ select {
 
 .section-content {
     overflow: hidden;
-    max-height: 1000px;
     transition: max-height 0.3s ease-out;
 }
 
