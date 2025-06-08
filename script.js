@@ -106,10 +106,17 @@ async function loadChecklist() {
         }
 
         title.addEventListener('click', () => {
-            section.classList.toggle('collapsed');
+            const isCollapsed = section.classList.toggle('collapsed');
+            if (isCollapsed) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+
         });
 
         content.appendChild(itemsList);
+        content.style.maxHeight = content.scrollHeight + "px";
         section.appendChild(title);
         section.appendChild(content);
         checklist.appendChild(section);
