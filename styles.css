@@ -240,7 +240,7 @@ select {
 }
 /* Кнопки выбора пользователя */
 #userSelect button {
-    width: 48%;
+    width: 100%;
     padding: 15px;
     font-size: 16px;
     border: none;
