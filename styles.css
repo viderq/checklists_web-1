@@ -239,3 +239,63 @@ select {
         transform: translateY(0);
     }
 }
+/* Кнопки выбора пользователя */
+#userSelect button {
+    width: 48%;
+    padding: 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    margin: 1%;
+    background-color: var(--primary);
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 4px 6px var(--shadow);
+    transition: background 0.3s, transform 0.2s;
+}
+
+#userSelect button:hover {
+    background-color: #3a78c2;
+}
+
+#userSelect button:active {
+    transform: scale(0.97);
+}
+
+/* Плавное появление чеклиста */
+#checklist {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.change-user-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.change-user-btn:hover {
+    background: var(--primary);
+    color: white;
+}

@@ -18,14 +18,22 @@
     <div class="container">
         <h1 id="header-updater">Чек-лист перед рейсом</h1>
 
-        <div class="selector">
-            <select id="tripType">
-                <option value="flight">Рейс рабочим разворотом</option>
-                <option value="workFirst">Командировка, сначала рабочим</option>
-                <option value="passengerFirst">Командировка, сначала пассажиром</option>
-                <option value="hotelOut">Выход из номера гостиницы</option>
-            </select>
-        </div>
+        <!-- Выбор пользователя -->
+<div id="userSelect" class="selector">
+    <button onclick="selectUser('Sasha')">Саша</button>
+    <button onclick="selectUser('Masha')">Маша</button>
+</div>
+
+<!-- Выбор типа поездки -->
+<div class="selector" id="tripSelector" style="display: none;">
+    <select id="tripType">
+        <option value="flight">Рейс рабочим разворотом</option>
+        <option value="workFirst">Командировка, сначала рабочим</option>
+        <option value="passengerFirst">Командировка, сначала пассажиром</option>
+        <option value="hotelOut">Выход из номера гостиницы</option>
+    </select>
+</div>
+
 
         <div id="all-checked-banner" class="all-checked-banner">
             <i class="fas fa-check-circle"></i> Всё проверено!
@@ -36,6 +44,10 @@
         <button class="reset-btn" onclick="resetChecks()">
             <i class="fas fa-undo"></i> Сбросить
         </button>
+        <button class="change-user-btn" onclick="changeUser()">
+            <i class="fas fa-user-circle"></i> Сменить пользователя
+        </button>
+
     </div>
 
     <script src="script.js"></script>

@@ -1,33 +1,63 @@
 let currentChecks = {};
+let selectedUser = null;
+let lists = {};
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const headerUpdate = document.getElementById('header-updater');
     headerUpdate.addEventListener('click', reloadPage);
 
+    await loadChecklistData();
     loadChecks();
-    const tripTypeSelect = document.getElementById('tripType');
 
-    tripTypeSelect.value = localStorage.getItem('tripType') || 'flight';
+    document.getElementById('tripType').addEventListener('change', loadChecklist);
 
-    tripTypeSelect.addEventListener('change', loadChecklist);
-    loadChecklist();
+    const savedUser = localStorage.getItem('selectedUser');
+    if (savedUser) {
+        selectUser(savedUser); // автоматический выбор
+    } else {
+        document.getElementById('tripSelector').style.display = 'none'; // спрятать выбор рейса до выбора пользователя
+    }
 });
 
 function reloadPage() {
     location.reload();
 }
 
+async function loadChecklistData() {
+    try {
+        const response = await fetch('list.json');
+        lists = await response.json();
+    } catch (error) {
+        console.error("Ошибка загрузки list.json:", error);
+    }
+}
+
+function selectUser(user) {
+    selectedUser = user;
+    localStorage.setItem('selectedUser', user);
+    document.getElementById('userSelect').style.display = 'none';
+    document.getElementById('tripSelector').style.display = 'block';
+
+    const tripTypeSelect = document.getElementById('tripType');
+    tripTypeSelect.value = localStorage.getItem('tripType') || 'flight';
+    loadChecklist();
+}
+
 async function loadChecklist() {
-    const response = await fetch('list.json');
-    const lists = await response.json();
+    if (!selectedUser || !lists[selectedUser]) return;
+
     const tripType = document.getElementById('tripType').value;
     const checklist = document.getElementById('checklist');
     checklist.innerHTML = '';
 
-    // Сохраняем в localStorage.
     localStorage.setItem('tripType', tripType);
 
-    const sections = lists[tripType];
+    const sections = lists[selectedUser][tripType];
+    if (!sections) {
+        checklist.innerHTML = '<p>Нет данных для выбранного типа поездки.</p>';
+        return;
+    }
+
     let allSectionsChecked = true;
 
     for (const [sectionName, items] of Object.entries(sections)) {
@@ -54,7 +84,7 @@ async function loadChecklist() {
         let allChecked = true;
 
         items.forEach((item, index) => {
-            const itemId = `${tripType}-${sectionName}-${index}`;
+            const itemId = `${selectedUser}-${tripType}-${sectionName}-${index}`;
             const itemElement = document.createElement('div');
             itemElement.className = `checklist-item ${currentChecks[itemId] ? 'checked' : ''}`;
             itemElement.innerHTML = `
@@ -85,13 +115,8 @@ async function loadChecklist() {
         checklist.appendChild(section);
     }
 
-    // Показываем или скрываем плашку "Всё проверено"
     const allCheckedBanner = document.getElementById('all-checked-banner');
-    if (allSectionsChecked) {
-        allCheckedBanner.style.display = 'block';
-    } else {
-        allCheckedBanner.style.display = 'none';
-    }
+    allCheckedBanner.style.display = allSectionsChecked ? 'block' : 'none';
 }
 
 function toggleCheck(itemId, element) {
@@ -100,7 +125,6 @@ function toggleCheck(itemId, element) {
     element.querySelector('.checkbox i').className = `fas fa-${currentChecks[itemId] ? 'check-square' : 'square'}`;
     saveChecks();
 
-    // Проверяем статус всей секции
     const section = element.closest('.section');
     const items = section.querySelectorAll('.checklist-item');
     const allChecked = Array.from(items).every(item => item.classList.contains('checked'));
@@ -112,18 +136,13 @@ function toggleCheck(itemId, element) {
         section.classList.remove('collapsed');
     }
 
-    // Проверяем статус всех разделов
     const sections = document.querySelectorAll('.section');
     const allSectionsChecked = Array.from(sections).every(section =>
         section.classList.contains('fully-checked')
     );
 
     const allCheckedBanner = document.getElementById('all-checked-banner');
-    if (allSectionsChecked) {
-        allCheckedBanner.style.display = 'block';
-    } else {
-        allCheckedBanner.style.display = 'none';
-    }
+    allCheckedBanner.style.display = allSectionsChecked ? 'block' : 'none';
 }
 
 function getSectionIcon(sectionName) {
@@ -156,4 +175,13 @@ function saveChecks() {
 
 function loadChecks() {
     currentChecks = JSON.parse(localStorage.getItem('travelChecklist') || '{}');
+}
+
+function changeUser() {
+    localStorage.removeItem('selectedUser');
+    selectedUser = null;
+    document.getElementById('userSelect').style.display = 'block';
+    document.getElementById('tripSelector').style.display = 'none';
+    document.getElementById('checklist').innerHTML = '';
+    document.getElementById('all-checked-banner').style.display = 'none';
 }
